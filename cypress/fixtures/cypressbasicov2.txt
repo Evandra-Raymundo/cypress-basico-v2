@@ -1,0 +1,91 @@
+Comandos           <                >Para que serve
+Principais Pluguins<    Cypress     >Tecnologias  ( Node.js - JavaScript?typescript - CoffeScript - Mocha   - Chai - Assíncrono)
+Onde aprender      <                >Limitações  (trade Offs)
+                                    >Melhores práticas
+Instalar o Node
+
+
+Iniciando o Cypress
+
+Verificar as versões
+
+node --version
+git
+npm
+
+npm init --yes ( npm = node package manager)
+gerenciador de pacotes node
+package.json descreve os pacotes e scripts que vamos utilizar no nosso projeto
+*npm install -D cypress 
+*npm install -D cypress  @versão - para determinada versão 
+*npx cypress open - comando do cypress para criar a estrutura de pastas padrão
+Acontecem 3 coisas
+
+*Verificar se o Cypress pode rodar
+*Abrir o Cypress
+*Criar a estrutura de pasta
+Duas estruturas chave
+Cypress Jso- têm todas as configurações do Cypress
+Diretório do Cypress - > diretório do Cypress onde fica o Cypress padrão
+
+fixtures -> dados e arquivos de mocks
+integration -> pasta que contém os arquivos de teste que normamlmente são salvos com extensão .js
+plugins-> armazena as configurações de plugins
+suport -> arquivos de suporte aos nossos testes
+
+*screenshot->prints tirados durante o teste
+*vídeos -> cria pasta com vídeos gerados durante o teste
+
+Executar exemplos na máquina
+
+Visitando uma url remota
+
+cy.visit().
+
+cy.visit('https://google.com')
+
+***Primeiro teste
+Describe  primeiro argumento um texto , função de callback
+It primeiro argumento um texto descrição do teste , função de callback
+
+
+"scripts": {
+  "cy:open": "cypress open", abre modo interativo
+  "test": "cypress run", modo hadless roda por detrás do pano
+},
+
+
+Para Digitação verificar documentação
+cy.get()
+.type() na documentação do type temos o objeto de options
+.click()
+Hooks
+.clear()
+
+**it.only -> executa apenas o teste com only
+item mira do cypress quando está sendo executado traz os seletores que devem ser iniciados
+#( hash significa que é um id)
+.( significa que é uma classe)
+
+****Comandos Customizados
+
+Cypress.Commands.add('fillMandatoryFieldsAndSubmit', function(){
+
+Nome do comando cypress->Cypress.Commands.add
+Nome do comando customizado ->('fillMandatoryFieldsAndSubmit',
+Função -> function(){
+
+Esse comando era para preencher o formulário e clicar em enviar usamos exemplo do exercício extra 1
+
+cy.contains('button', 'Enviar').click() // para o exercício extra 8 usamos cy.contains ao invés de cy.get
+quando o elemento tem um texto específico que identifica ele unicamente
+ qdClwd
+
+****Criando estrutura de acesso ao ponto
+
+describe('Marcação de Ponto', function() {
+    it('verifica o título da aplicação', function() {
+       cy.visit('https://app2.pontomais.com.br/registrar-ponto')
+       cy.title().should('be.equal', 'Pontomais')
+    })
+  })
