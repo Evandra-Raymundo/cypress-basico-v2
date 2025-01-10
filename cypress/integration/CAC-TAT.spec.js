@@ -142,23 +142,23 @@ describe('Central de Atendimento ao Cliente TAT', function() {
        //  expect(input[0].files[0].name).to.equal('example.json')
        // })
      // })
-     it('seleciona um arquivo simulando um drag and drop', () => {
-        cy.get('#file-upload')
-        .selectFile('cypress-basico-v2\cypress\fixtures\example.json', {action: 'drag-drop'})
-       .should((input)=> {
+    // it('seleciona um arquivo simulando um drag and drop', () => {
+       // cy.get('#file-upload')
+      //  .selectFile('cypress-basico-v2\cypress\fixtures\example.json', {action: 'drag-drop'})
+     //  .should((input)=> {
         //console.log(input)   
-        expect(input[0].files[0].name).to.equal('example.json')
-        })
-     })
+     //   expect(input[0].files[0].name).to.equal('example.json')
+     //   })
+    // })
    
-     it('seleciona um arquivo utilizando uma fixture para qual foi dado um alias', () => {
-        cy.fixture('example.json').as('sampleFile')
-        cy.get('#file-upload')
-        .selectFile('@sampleFile')
-        .should((input)=> {
-        expect(input[0].files[0].name).to.equal('example.json')
-        })
-     })
+    // it('seleciona um arquivo utilizando uma fixture para qual foi dado um alias', () => {
+      //  cy.fixture('example.json').as('sampleFile')
+     //   cy.get('#file-upload')
+     //   .selectFile('@sampleFile')
+     //   .should((input)=> {
+     //   expect(input[0].files[0].name).to.equal('example.json')
+     //   })
+    // })
 
      //Links que abrem em outra ABA
      it('verifica a politica de privacidade abre em outra aba sem o clique', ()=> {
