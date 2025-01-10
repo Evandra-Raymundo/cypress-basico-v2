@@ -36,7 +36,7 @@ document.querySelector('button[type="submit"]')
       return showAndHideErrorMessage()
     }
     if (!emailField.value.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)) {
-      return showAndHideErrorMessage()
+      return showAndHideErrorMessage() // quando essa linha é comentada a CI quebra
     }
     firstNameField.value = ''
     lastNameField.value = ''
