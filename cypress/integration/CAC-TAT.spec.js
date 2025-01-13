@@ -7,8 +7,10 @@ describe('Central de Atendimento ao Cliente TAT', function() {
     it('verifica o título da aplicação', function() {
         cy.title().should('be.equal', 'Central de Atendimento ao Cliente TAT')
     })
-    it('preenche os campos obrigatóriose envia o formulario', function(){
-       //Para o exercício extra 1 vamos criar uma variável
+    it('preenche os campos obrigatórios e envia o formulario', function(){
+       // Para o exercício 13 vamos criar uma nova linha com cy clock
+       cy.clock()
+        //Para o exercício extra 1 vamos criar uma variável
        const longText = 'Teste para o exercício 2 que exige um texto longo dentro do campo de digitação, Teste para o exercício 2 que exige um texto longo dentro do campo de digitação.'
 
        //exercício 1
@@ -20,8 +22,16 @@ describe('Central de Atendimento ao Cliente TAT', function() {
         //cy.get('button[type="submit"]').click()
         cy.contains('button', 'Enviar').click() // para o exercício extra 8 usamos cy.contains ao invés de cy.get
         cy.get('.success').should('be.visible')
+       
+        //Adicionados para o exercício 13 
+        cy.tick(3000)
+        cy.get('.success').should('not.be.visible')
+
     })
     it('mensagem de erro ao submeter o formulário  com email com formatação inválida', function(){
+        // Para o exercício 13 vamos criar uma nova linha com cy clock
+       cy.clock()
+        
         cy.get('#firstName').type('Evandra')
         cy.get('#lastName').type('Raymundo')
         cy.get('#email').type('evandra@exemplo,com')
@@ -29,13 +39,21 @@ describe('Central de Atendimento ao Cliente TAT', function() {
         //cy.get('button[type="submit"]').click()
         cy.contains('button', 'Enviar').click() // para o exercício extra 8 usamos cy.contains ao invés de cy.get
         cy.get('.error').should('be.visible')
+
+        //Adicionados para o exercício 13 
+        cy.tick(3000)
+        cy.get('.success').should('not.be.visible')
+
     })
     it('campo telefone continua vazio quando preenchido com valor não numérico', function(){  //exercício extra 3 telefone vazio 
        cy.get('#phone')
        .type('abcdefghij')
        .should('have.value', '')
     })
-    it('exibe mensagem de erro quando telefone se torna obrigatório mas não pe preenchido antes do envio do  form ', function(){
+    it.only('exibe mensagem de erro quando telefone se torna obrigatório mas não pe preenchido antes do envio do  form ', function(){
+        // Para o exercício 13 vamos criar uma nova linha com cy clock
+        cy.clock()
+
         cy.get('#firstName').type('Evandra')
         cy.get('#lastName').type('Raymundo')
         cy.get('#email').type('evandra@exemplo.com')
@@ -45,6 +63,9 @@ describe('Central de Atendimento ao Cliente TAT', function() {
         cy.contains('button', 'Enviar').click() // para o exercício extra 8 usamos cy.contains ao invés de cy.get
         
         cy.get('.error').should('be.visible')
+         //Adicionados para o exercício 13 
+         cy.tick(3000)
+         cy.get('.success').should('not.be.visible')
     })
     it('preenche e limpa os campos nome, sobrenome, email e telefone', function(){ // Exercício extra 5
         cy.get('#firstName')
@@ -174,5 +195,51 @@ describe('Central de Atendimento ao Cliente TAT', function() {
         .should('be.visible')
      })
      
+    it('exibe e oculta as mensagens de sucesso e erro usando .invoke()', () => {
+            cy.get('.success')
+              .should('not.be.visible')
+              .invoke('show')
+              .should('be.visible')
+              .and('contain', 'Mensagem enviada com sucesso.')
+              .invoke('hide')
+              .should('not.be.visible')
+            cy.get('.error')
+              .should('not.be.visible')
+              .invoke('show')
+              .should('be.visible')
+              .and('contain', 'Valide os campos obrigatórios!')
+              .invoke('hide')
+              .should('not.be.visible')
+    })
+     //Simulando um comando CTRL+V
+    it('preenche o campo da área de texto usando o comando invoke', () => {
+      cy.get('#open-text-area').invoke('val', 'Esse texto é do exercício13')
+      .should('have.value', 'Esse texto é do exercício13')
+     })
+     it(' Faz uma requisição HTTP', () => {
+       cy.request('https://cac-tat-v3.s3.eu-central-1.amazonaws.com/index.html')
+       .as('getRequest')
+       .its('status')
+       .should('be.equal', 200)
+       cy.get('@getRequest')
+        .its('statusText')
+        .should('be.equal', 'OK')
+        cy.get('@getRequest')
+        .its('body')
+        .should('include', 'CAC TAT')
+    })
+
+    it.only('encontra o gato escondido', () => {
+      cy.get('#cat') 
+       .invoke ('show')
+       .should('be.visible')
+       //Mudando o nome da aplicação
+       cy.get('#title')
+       .invoke('text', 'CAT TAT')
+       cy.get('#subtitle')
+       .invoke('text', 'I love CATs')
+    })
+
+    
 
   })
